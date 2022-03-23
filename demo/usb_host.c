@@ -69,6 +69,7 @@ int cdc_acm_test(void)
     return ret;
 #endif
 }
+
 #if 0
 #include "ff.h"
 #endif
@@ -178,3 +179,4 @@ int hid_test(void)
 #endif
     return ret;
 }
+#endif

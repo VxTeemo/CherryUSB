@@ -105,6 +105,7 @@ static int audio_class_request_handler(struct usb_setup_packet *setup, uint8_t *
 
 static void audio_notify_handler(uint8_t event, void *arg)
 {
+    struct usb_interface_descriptor *intf = (struct usb_interface_descriptor *)arg;
     switch (event) {
         case USBD_EVENT_RESET:
 
@@ -115,7 +116,6 @@ static void audio_notify_handler(uint8_t event, void *arg)
             break;
 
         case USBD_EVENT_SET_INTERFACE:
-            struct usb_interface_descriptor *intf = (struct usb_interface_descriptor *)arg;
             if (intf->bAlternateSetting == 1) {
                 usbd_audio_open(intf->bInterfaceNumber);
             } else {

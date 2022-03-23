@@ -18,6 +18,7 @@ int usb_hc_init(void)
 {
     memset(&g_usbhost, 0, sizeof(struct usb_xxx_priv));
 
+    g_usbhost.exclsem = usb_osal_mutex_create();
     usb_hc_low_level_init();
 
     return 0;

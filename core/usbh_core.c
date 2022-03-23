@@ -731,13 +731,14 @@ static void usbh_portchange_detect_thread(void *argument)
 {
     struct usbh_hubport *hport = NULL;
 
+    usb_hc_init();
+    USB_LOG_INFO("usb_hc_init\r\n");
+
     for (uint8_t port = USBH_HUB_PORT_START_INDEX; port <= CONFIG_USBHOST_RHPORTS; port++) {
         usbh_core_cfg.rhport[port - 1].hport.port = port;
         usbh_core_cfg.rhport[port - 1].devgen.next = 1;
         usbh_hport_activate(&usbh_core_cfg.rhport[port - 1].hport);
     }
-
-    usb_hc_init();
 
     while (1) {
         usbh_portchange_wait(&hport);
