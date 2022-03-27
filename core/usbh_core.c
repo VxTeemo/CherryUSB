@@ -195,7 +195,7 @@ void usbh_hport_deactivate(struct usbh_hubport *hport)
 static int parse_device_descriptor(struct usbh_hubport *hport, struct usb_device_descriptor *desc, uint16_t length)
 {
     if (desc->bLength != USB_SIZEOF_DEVICE_DESC) {
-        USB_LOG_ERR("invalid device bLength 0x%02x\r\n", desc->bLength);
+        USB_LOG_ERR("x invalid device bLength 0x%02x\r\n", desc->bLength);
         return -EINVAL;
     } else if (desc->bDescriptorType != USB_DESCRIPTOR_TYPE_DEVICE) {
         USB_LOG_ERR("unexpected device descriptor 0x%02x\r\n", desc->bDescriptorType);
@@ -204,7 +204,7 @@ static int parse_device_descriptor(struct usbh_hubport *hport, struct usb_device
         if (length <= 8) {
             return 0;
         }
-#if 0
+#if 1
         USB_LOG_DBG("Device Descriptor:\r\n");
         USB_LOG_DBG("bLength: 0x%02x           \r\n", desc->bLength);
         USB_LOG_DBG("bDescriptorType: 0x%02x   \r\n", desc->bDescriptorType);
@@ -632,13 +632,14 @@ static int usbh_enumerate(struct usbh_hubport *hport)
         goto errout;
     }
 
-    USB_LOG_INFO("Enumeration success, start loading class driver\r\n");
+    USB_LOG_INFO("Enumeration success, start loading class driver %d\r\n", hport->config.config_desc.bNumInterfaces);
     /*search supported class driver*/
     for (uint8_t i = 0; i < hport->config.config_desc.bNumInterfaces; i++) {
         intf_desc = &hport->config.intf[i].intf_desc;
 
         struct usbh_class_driver *class_driver = (struct usbh_class_driver *)usbh_find_class_driver(intf_desc->bInterfaceClass, intf_desc->bInterfaceSubClass, intf_desc->bInterfaceProtocol, hport->device_desc.idVendor, hport->device_desc.idProduct);
 
+        USB_LOG_INFO("hport->device_desc.idProduct %d\r\n", hport->device_desc.idProduct);
         if (class_driver == NULL) {
             USB_LOG_ERR("do not support Class:0x%02x,Subclass:0x%02x,Protocl:0x%02x\r\n",
                         intf_desc->bInterfaceClass,

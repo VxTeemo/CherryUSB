@@ -161,6 +161,7 @@ int usbh_cdc_acm_connect(struct usbh_hubport *hport, uint8_t intf)
     struct usb_endpoint_descriptor *ep_desc;
     int ret;
 
+    USB_LOG_INFO("usbh_cdc_acm_connect\r\n");
     struct usbh_cdc_acm *cdc_acm_class = usb_malloc(sizeof(struct usbh_cdc_acm));
     if (cdc_acm_class == NULL) {
         USB_LOG_ERR("Fail to alloc cdc_acm_class\r\n");

@@ -257,7 +257,7 @@
 #define USB_DBG_LOG     3
 
 #ifndef USB_DBG_LEVEL
-#define USB_DBG_LEVEL USB_DBG_INFO
+#define USB_DBG_LEVEL USB_DBG_LOG
 #endif
 
 #ifndef USB_DBG_TAG
